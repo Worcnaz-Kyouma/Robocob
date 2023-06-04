@@ -8,13 +8,13 @@ export default function Home(){
 
     return (
         <>
-        <Header token={location.state.token}>
-            <Link to={location.pathname + "/sender"} state={{token: location.state.token}}><button>Send</button></Link>
+        <Header token={location.state?.token}>
+            <Link to={location.pathname + "/sender"} state={{token: location.state?.token}}><button>Send</button></Link>
         </Header>
 
-        <MessagesList token={location.state.token}/>
+        <MessagesList token={location.state?.token}/>
         
-        <Footer token={location.state.token}/>
+        <Footer token={location.state?.token}/>
         </>
         
     )
