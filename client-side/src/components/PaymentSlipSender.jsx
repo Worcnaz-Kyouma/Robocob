@@ -96,9 +96,9 @@ export default function PaymentSlipSender(props){
 
         const form = event.target
 
-        //sendPaymentSlip(form)
+        sendPaymentSlip(form)
 
-        //sendAdditionalMessage(form)
+        sendAdditionalMessage(form)
 
         persistMessage(form)
     }
