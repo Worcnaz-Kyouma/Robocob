@@ -29,7 +29,6 @@ export default function PaymentSlipSender(props){
                     'Authorization': 'Bearer ' + location.state.token
                 }
             }).then(res => res.json())
-              .then(resJson => console.log(resJson))
         }
     })
 
@@ -52,12 +51,12 @@ export default function PaymentSlipSender(props){
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
                 }
-            })
+            }).then(res => res.json())
         }
     })
 
     async function sendPaymentSlip(form){
-        const pdfFileToBase64 = (file) => {
+        function pdfFileToBase64(file){
             return new Promise((resolve, reject) => {
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(file);
