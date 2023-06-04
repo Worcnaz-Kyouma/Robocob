@@ -1,7 +1,7 @@
-import Header from "./Header"
+import Header from "../Header"
 import MessagesList from "./MessagesList"
 import Footer from "./Footer"
-import { useLocation } from "react-router-dom"
+import { useLocation, Link } from "react-router-dom"
 
 export default function Home(){
     const location = useLocation()
@@ -9,9 +9,7 @@ export default function Home(){
     return (
         <>
         <Header token={location.state.token}>
-            <button>
-                Send
-            </button>
+            <Link to={location.pathname + "/sender"} state={{token: location.state.token}}><button>Send</button></Link>
         </Header>
 
         <MessagesList token={location.state.token}/>

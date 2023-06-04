@@ -3,7 +3,6 @@ import { useQueryClient, useQuery } from "@tanstack/react-query"
 
 export default function Login(){
     const location = useLocation()
-    //console.log(location.state?.token)
 
     const sessionStartQuery = useQuery({
         queryKey: ['session', 'start'],
@@ -18,7 +17,7 @@ export default function Login(){
                     webhook: null,
                     waitQrCode: true
                 })
-            }).then((res) => res.json())
+            }).then(res => res.json())
         },
         refetchInterval: 1000 * 40,
     })
@@ -30,7 +29,7 @@ export default function Login(){
                 headers: {
                     'Authorization': 'Bearer ' + location.state.token
                 }
-            }).then((res) => res.blob())
+            }).then(res => res.blob())
         },
         enabled: sessionStartQuery.isSuccess,
         refetchInterval: 1000 * 1
