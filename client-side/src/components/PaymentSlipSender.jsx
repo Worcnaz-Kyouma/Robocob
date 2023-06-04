@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { useLocation, useNavigate } from "react-router-dom"
 import Header from "./Header"
+import moment from 'moment';
 
 export default function PaymentSlipSender(props){
     const navigate = useNavigate()
@@ -36,20 +37,9 @@ export default function PaymentSlipSender(props){
         mutationFn: (newMessage) => {
             return fetch("http://localhost:8000/api/boleto", {
                 method: "POST",
-                body: new URLSearchParams({
-                    'mensagem_adicional': 'sus',
-                    'numero_destino': 'sus',
-                    'data_envio': '2023/06/02',
-                    'nome_arquivo': 'sus.pdf'
-                }),/*(()=>{
-                    let newMessageUrl = new URLSearchParams()
-                    for(key in newMessage){
-                        newMessageUrl.append(key, newMessage[key])
-                    }
-                    return new URLSearchParams(newMessageUrl)
-                })()*/
+                body: JSON.stringify(newMessage),
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                    'Content-Type': 'application/json'
                 }
             }).then(res => res.json())
         }
@@ -95,9 +85,9 @@ export default function PaymentSlipSender(props){
         
         formData.append("nome_arquivo", form.querySelector('input[type="file"]').files[0].name)
         formData.delete("boleto")
+        formData.append("data_envio", moment().format())
 
         const formJson = Object.fromEntries(formData.entries())
-
         messageMutation.mutate(formJson)
     }
     
@@ -106,9 +96,9 @@ export default function PaymentSlipSender(props){
 
         const form = event.target
 
-        sendPaymentSlip(form)
+        //sendPaymentSlip(form)
 
-        sendAdditionalMessage(form)
+        //sendAdditionalMessage(form)
 
         persistMessage(form)
     }
