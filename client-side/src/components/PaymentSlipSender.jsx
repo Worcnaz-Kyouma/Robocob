@@ -56,10 +56,25 @@ export default function PaymentSlipSender(props){
         }
     })
 
-    function sendPaymentSlip(form){
+    async function sendPaymentSlip(form){
+        const pdfFileToBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+        
+                fileReader.onload = () => {
+                    resolve(fileReader.result);
+                };
+        
+                fileReader.onerror = (error) => {
+                    reject(error);
+                };
+            });
+        };
+
         const formJson = {
             phone: form.querySelector('input[name="numero_destino"]').value,
-            base64: URL.createObjectURL(form.querySelector('input[type="file"]').files[0]),
+            base64: await pdfFileToBase64(form.querySelector('input[type="file"]').files[0]),
             isGroup: false
         }
 
@@ -79,7 +94,7 @@ export default function PaymentSlipSender(props){
     function persistMessage(form){
         const formData = new FormData(form)
         
-        formData.append("nome_arquivo", form.querySelector('input[type="file"]').value)
+        formData.append("nome_arquivo", form.querySelector('input[type="file"]').files[0].name)
         formData.delete("boleto")
 
         const formJson = Object.fromEntries(formData.entries())
@@ -92,15 +107,11 @@ export default function PaymentSlipSender(props){
 
         const form = event.target
 
-        //sendPaymentSlip(form)
+        sendPaymentSlip(form)
 
         sendAdditionalMessage(form)
 
         persistMessage(form)
-
-        //URL.createObjectURL(event.target.querySelector('input[type="file"]'))
-        //const formData = new FormData(form)
-        //formData.delete("boleto") 
     }
 
     return (
