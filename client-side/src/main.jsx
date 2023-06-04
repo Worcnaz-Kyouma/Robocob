@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Home from './components/Home'
+import Home from './components/home/Home'
 import Login from './components/Login'
-import Root from './components/root'
+import Root from './components/Root'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"

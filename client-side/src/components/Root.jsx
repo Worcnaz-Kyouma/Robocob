@@ -25,19 +25,23 @@ export default function Root(){
         enabled: tokenQuery.isSuccess,
         refetchInterval: 1000,
         onSuccess: (data) =>{
-            if(data.status!="CONNECTED")
-               navigate('/login', {
-                state: {
-                    token: tokenQuery.data.token
+            setTimeout(()=>{
+                if(data.status!="CONNECTED"){
+                    navigate('/login', {
+                        state: {
+                            token: tokenQuery.data.token
+                        }
+                    })
                 }
-               })
-            else{
-                navigate('/home', {
-                    state: {
-                        token: tokenQuery.data.token
-                    }
-                   })
-            }
+                else{
+                    navigate('/home', {
+                        state: {
+                            token: tokenQuery.data.token
+                        }
+                    })
+                }
+            }, 5000)
+            
         }
     })
 
