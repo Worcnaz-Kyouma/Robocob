@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { useLocation, useNavigate } from "react-router-dom"
 import Header from "./Header"
+import Footer from "./home/Footer";
 import moment from 'moment';
 import { StyledButton } from "./styles/Button.styled";
 
@@ -107,7 +108,7 @@ export default function PaymentSlipSender(props){
     return (
         <>
         <Header>
-        <StyledButton onClick={() => navigate(-1)}>Go back</StyledButton>
+            <StyledButton onClick={() => navigate(-1)}>Go back</StyledButton>
         </Header>
         <form onSubmit={handleSubmit}>
             <label htmlFor="numero_destino">Numero destino</label>
@@ -120,6 +121,8 @@ export default function PaymentSlipSender(props){
             <input type="file" name="boleto" accept="application/pdf"/>
             <button type="submit">Submit</button>
         </form>
+        
+        <Footer token={location.state.token}/>
         </>
         
     )

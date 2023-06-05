@@ -5,6 +5,8 @@ export const StyledFooter = styled.footer`
     align-items: center;
     justify-content: space-around;
 
+    margin-top: auto;
+
     height: 200px;
 
     color: rgb(226, 226, 226);
