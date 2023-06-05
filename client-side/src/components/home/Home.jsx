@@ -12,7 +12,9 @@ export default function Home(){
         <Header token={location.state?.token}>
             <Link to={location.pathname + "/sender"} state={{token: location.state?.token}}><StyledButton>Enviar boleto</StyledButton></Link>
         </Header>
-
+        <h1 style={{
+            textAlign: "center"
+        }}>Mensagens enviadas</h1>
         <MessagesList token={location.state?.token}/>
         
         <Footer token={location.state?.token}/>

@@ -6,7 +6,7 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'Segoe UI';
     }
 
-    p {
+    h1, p {
         opacity: 0.6;
         line-height: 1.5;
     }

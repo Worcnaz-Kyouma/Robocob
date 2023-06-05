@@ -51,7 +51,7 @@ export default function Root(){
         colors: {
             primary: "#00c0fb",
             second: "#007DA3",
-            third: "#95DB8F",
+            third: "#003333",
             four: "#D2E3E2",
             five: "#5FAB5F"
         }

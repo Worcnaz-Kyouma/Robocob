@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+import { StyledFooter } from "../styles/Footer.styled"
 
 export default function Footer(props){
     const hostDeviceQuery = useQuery({
@@ -15,10 +16,12 @@ export default function Footer(props){
     if(hostDeviceQuery.isLoading) return <h1>Loading!</h1>
     if(hostDeviceQuery.isError) return <h1>Error :c</h1>
     return (
-        <>
-            <p>{hostDeviceQuery.data.response.platform}</p>
-            <p>{hostDeviceQuery.data.response.pushname}</p>
-            <p>{hostDeviceQuery.data.response.phoneNumber}</p>
-        </>
+        <StyledFooter>
+            <h2>{hostDeviceQuery.data.response.phoneNumber}</h2>
+            <ul>
+                <li><span>Name:</span> {hostDeviceQuery.data.response.pushname}</li>
+                <li><span>Platform:</span> {hostDeviceQuery.data.response.platform}</li>
+            </ul>
+        </StyledFooter>
     )
 }
