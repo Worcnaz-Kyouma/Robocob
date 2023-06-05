@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 import { useLocation, useNavigate } from "react-router-dom"
 import Header from "./Header"
 import moment from 'moment';
+import { StyledButton } from "./styles/Button.styled";
 
 export default function PaymentSlipSender(props){
     const navigate = useNavigate()
@@ -106,7 +107,7 @@ export default function PaymentSlipSender(props){
     return (
         <>
         <Header>
-        <button onClick={() => navigate(-1)}>Go back</button>
+        <StyledButton onClick={() => navigate(-1)}>Go back</StyledButton>
         </Header>
         <form onSubmit={handleSubmit}>
             <label htmlFor="numero_destino">Numero destino</label>

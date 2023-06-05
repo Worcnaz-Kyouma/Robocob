@@ -1,4 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
+import { HeaderStyled, HeaderButtonsWrapper } from "./styles/Header.styled"
+import { StyledButton } from "./styles/Button.styled"
 
 export default function Header(props){
     const logoutMutation = useMutation({
@@ -13,16 +15,16 @@ export default function Header(props){
     })
 
     return (
-        <div>
-            <div>
+       <HeaderStyled>
+            <HeaderButtonsWrapper>
                 {props.children}
-            </div>
+            </HeaderButtonsWrapper>
             <div>
-                <button onClick={logoutMutation.mutate}>
+                <StyledButton onClick={logoutMutation.mutate} barColor={'#9C0707'}>
                     Logout
-                </button>
+                </StyledButton>
             </div>
-            
-        </div>
+        </HeaderStyled>
+        
     )
 }

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
 import GlobalStyles from './styles/Global'
+import { ThemeProvider } from 'styled-components'
 
 export default function Root(){
     const navigate = useNavigate()
@@ -46,10 +47,22 @@ export default function Root(){
         }
     })
 
+    const theme = {
+        colors: {
+            primary: "#00c0fb",
+            second: "#007DA3",
+            third: "#95DB8F",
+            four: "#D2E3E2",
+            five: "#5FAB5F"
+        }
+    }
+
     return (
         <>
-        <GlobalStyles />
-        <Outlet />
+        <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            <Outlet />
+        </ThemeProvider>
         </>
     )
 }
