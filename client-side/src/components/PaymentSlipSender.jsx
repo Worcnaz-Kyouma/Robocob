@@ -78,7 +78,7 @@ export default function PaymentSlipSender(props){
     function sendAdditionalMessage(form){
         const formJson = {
             phone: form.querySelector('input[name="numero_destino"]').value,
-            message: form.querySelector('input[name="mensagem_adicional"]').value,
+            message: form.querySelector('textarea').value,
             isGroup: false
         }
 
