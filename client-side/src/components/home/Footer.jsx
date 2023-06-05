@@ -19,8 +19,8 @@ export default function Footer(props){
         <StyledFooter>
             <h2>{hostDeviceQuery.data.response.phoneNumber}</h2>
             <ul>
-                <li><span>Name:</span> {hostDeviceQuery.data.response.pushname}</li>
-                <li><span>Platform:</span> {hostDeviceQuery.data.response.platform}</li>
+                <li><span>Nome:</span> {hostDeviceQuery.data.response.pushname}</li>
+                <li><span>Plataforma:</span> {hostDeviceQuery.data.response.platform}</li>
             </ul>
         </StyledFooter>
     )

@@ -4,10 +4,13 @@ import Header from "./Header"
 import Footer from "./home/Footer";
 import moment from 'moment';
 import { StyledButton } from "./styles/Button.styled";
+import { Flex, StyledForm, StyledInputSpan } from "./styles/PaymentSlipSender.styled";
+import { useRef } from "react";
 
 export default function PaymentSlipSender(props){
     const navigate = useNavigate()
     const location = useLocation()
+    const embedRef = useRef(null)
 
     const sendFileMutation = useMutation({
         mutationFn: (newFile) => {
@@ -110,17 +113,35 @@ export default function PaymentSlipSender(props){
         <Header>
             <StyledButton onClick={() => navigate(-1)}>Go back</StyledButton>
         </Header>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="numero_destino">Numero destino</label>
-            <input type="text" name="numero_destino"/>
+        <Flex>
+            <StyledForm onSubmit={handleSubmit}>
+                <StyledInputSpan>
+                    <label htmlFor="numero_destino">Numero</label>
+                    <input type="text" name="numero_destino" id="numero_destino"/>
+                </StyledInputSpan>
+                <StyledInputSpan>
+                    <label htmlFor="mensagem_adicional">Mensagem</label>
+                    <textarea id="mensagem_adicional" name="mensagem_adicional"
+                        rows="5" cols="33">
+                    </textarea>
+                </StyledInputSpan>
+                <StyledInputSpan>
+                    <label htmlFor="boleto">Boleto
+                    </label>
+                    <input type="file" name="boleto"
+                    id="boleto"
+                    accept="application/pdf"
+                    onChange={(event) => {
+                        embedRef.current.src = URL.createObjectURL(event.target.files[0])
+                    }}/>
+                </StyledInputSpan>
+                <StyledButton barColor="#5FAB5F" type="submit">Submit</StyledButton>
+            </StyledForm>
 
-            <label htmlFor="mensagem_adicional">Mensagem adicional</label>
-            <input type="text" name="mensagem_adicional"/>
-
-            <label htmlFor="boleto">Boleto</label>
-            <input type="file" name="boleto" accept="application/pdf"/>
-            <button type="submit">Submit</button>
-        </form>
+            <div>
+                <embed src="../placeholder.pdf" alt="" ref={embedRef}/>
+            </div>
+        </Flex>
         
         <Footer token={location.state.token}/>
         </>
