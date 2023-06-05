@@ -4,7 +4,7 @@ import Header from "./Header"
 import Footer from "./home/Footer";
 import moment from 'moment';
 import { StyledButton } from "./styles/Button.styled";
-import { Flex, StyledForm, StyledInputSpan } from "./styles/PaymentSlipSender.styled";
+import { Flex, StyledForm, StyledInputSpan, StyledInputFileSpan } from "./styles/PaymentSlipSender.styled";
 import { useRef } from "react";
 
 export default function PaymentSlipSender(props){
@@ -122,11 +122,13 @@ export default function PaymentSlipSender(props){
                 <StyledInputSpan>
                     <label htmlFor="mensagem_adicional">Mensagem</label>
                     <textarea id="mensagem_adicional" name="mensagem_adicional"
-                        rows="5" cols="33">
+                        rows="10" cols="45">
                     </textarea>
                 </StyledInputSpan>
-                <StyledInputSpan>
-                    <label htmlFor="boleto">Boleto
+                <StyledInputFileSpan>
+                    <span>Boleto</span>
+                    <label htmlFor="boleto">
+                        <img src="../pdf.png" alt="" />
                     </label>
                     <input type="file" name="boleto"
                     id="boleto"
@@ -134,7 +136,7 @@ export default function PaymentSlipSender(props){
                     onChange={(event) => {
                         embedRef.current.src = URL.createObjectURL(event.target.files[0])
                     }}/>
-                </StyledInputSpan>
+                </StyledInputFileSpan>
                 <StyledButton barColor="#5FAB5F" type="submit">Submit</StyledButton>
             </StyledForm>
 
