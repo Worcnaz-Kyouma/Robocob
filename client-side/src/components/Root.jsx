@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
+import GlobalStyles from './styles/Global'
 
 export default function Root(){
     const navigate = useNavigate()
@@ -45,5 +46,10 @@ export default function Root(){
         }
     })
 
-    return <><Outlet /></>
+    return (
+        <>
+        <GlobalStyles />
+        <Outlet />
+        </>
+    )
 }

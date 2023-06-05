@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom"
 import { useQueryClient, useQuery } from "@tanstack/react-query"
+import { QRcodeWrapper } from "./styles/QRcode.styled"
 
 export default function Login(){
     const location = useLocation()
@@ -35,9 +36,13 @@ export default function Login(){
         refetchInterval: 1000 * 1
     })
 
-    if (sessionQRCodeQuery.isSuccess) return (
-        <img src={URL.createObjectURL(sessionQRCodeQuery.data)} alt="QRCode" />)
-    else return <h1>Loading</h1>
+    if(sessionQRCodeQuery.isLoading) return <h1>Loading</h1>
+    if(sessionQRCodeQuery.isError) return <h1>Error</h1>
+    return (
+        <QRcodeWrapper>
+            <img src={URL.createObjectURL(sessionQRCodeQuery.data)} alt="QRCode" />
+        </QRcodeWrapper>
+    )
 
     
 }
