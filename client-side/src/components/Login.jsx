@@ -19,7 +19,7 @@ export default function Login(){
                 })
             }).then(res => res.json())
         },
-        refetchInterval: 1000 * 40,
+        refetchInterval: 1000 * 40
     })
 
     const sessionQRCodeQuery = useQuery({

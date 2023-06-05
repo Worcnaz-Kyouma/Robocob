@@ -1,4 +1,16 @@
+import { useQuery } from "@tanstack/react-query"
+
 export default function MessagesList(){
+    const messageQuery = useQuery({
+        queryKey: ["message"],
+        queryFn: () => {
+            return fetch("http://localhost:8000/api/boleto").then(res => res.json())
+        }
+    })
+
+    if (messageQuery.isLoading) return <h1>Loading!</h1>
+    if (messageQuery.isError) return <h1>Error :c</h1>
+
     return (
         <table>
             <thead>
@@ -11,13 +23,17 @@ export default function MessagesList(){
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>-1</td>
-                    <td>Sugoma</td>
-                    <td>5599813748</td>
-                    <td>{new Date().toISOString()}</td>
-                    <td>sugoma.pdf</td>
-                </tr>
+                {messageQuery.data.map(message => {
+                    return (
+                        <tr key={message.id}>
+                            <td>{message.id}</td>
+                            <td>{message.mensagem_adicional}</td>
+                            <td>{message.numero_destino}</td>
+                            <td>{message.data_envio}</td>
+                            <td>{message.nome_arquivo}</td>
+                        </tr>
+                    )
+                })}
             </tbody>
         </table>
     )
