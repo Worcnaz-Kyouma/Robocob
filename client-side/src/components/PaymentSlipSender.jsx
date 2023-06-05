@@ -111,7 +111,7 @@ export default function PaymentSlipSender(props){
     return (
         <>
         <Header>
-            <StyledButton onClick={() => navigate(-1)}>Go back</StyledButton>
+            <StyledButton onClick={() => navigate(-1)}>Voltar</StyledButton>
         </Header>
         <Flex>
             <StyledForm onSubmit={handleSubmit}>

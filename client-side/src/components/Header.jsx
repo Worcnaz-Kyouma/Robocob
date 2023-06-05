@@ -21,7 +21,7 @@ export default function Header(props){
             </HeaderButtonsWrapper>
             <div>
                 <StyledButton onClick={logoutMutation.mutate} barColor={'#9C0707'}>
-                    Logout
+                    Sair
                 </StyledButton>
             </div>
         </HeaderStyled>

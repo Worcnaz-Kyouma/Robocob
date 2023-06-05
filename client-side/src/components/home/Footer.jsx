@@ -10,6 +10,10 @@ export default function Footer(props){
                     'Authorization': 'Bearer ' + props.token
                 }
             }).then(res => res.json())
+        },
+        onSuccess: (data) => {
+            if(!data.response.pushname)
+                hostDeviceQuery.refetch()
         }
     }) 
 
@@ -17,10 +21,10 @@ export default function Footer(props){
     if(hostDeviceQuery.isError) return <h1>Error :c</h1>
     return (
         <StyledFooter>
-            <h2>{hostDeviceQuery.data.response.phoneNumber}</h2>
+            <h2>{hostDeviceQuery.data.response?.phoneNumber}</h2>
             <ul>
-                <li><span>Nome:</span> {hostDeviceQuery.data.response.pushname}</li>
-                <li><span>Plataforma:</span> {hostDeviceQuery.data.response.platform}</li>
+                <li><span>Nome:</span> {hostDeviceQuery.data.response?.pushname}</li>
+                <li><span>Plataforma:</span> {hostDeviceQuery.data.response?.platform}</li>
             </ul>
         </StyledFooter>
     )
