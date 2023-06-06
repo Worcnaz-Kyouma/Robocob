@@ -120,7 +120,7 @@ export default function PaymentSlipSender(props){
     return (
         <>
         {(messageMutation.isSuccess) && <StyledSucess />}
-        {(fileMutation.isError || additionalMessageMutation.isError || messageMutation.isError) && <StyledError />}
+        {(fileMutation.isError || additionalMessageMutation.isError || messageMutation.isError) && <StyledError infinity={true}/>}
         <Header>
             <StyledButton onClick={() => navigate(-1)}>Voltar</StyledButton>
         </Header>

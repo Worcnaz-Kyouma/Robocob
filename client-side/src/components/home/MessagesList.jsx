@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { TableWrapper, StyledTable } from "../styles/Table.styled"
-import { StyledLoading } from "../styles/Utils.styled"
+import { StyledError, StyledLoading } from "../styles/Utils.styled"
 
 export default function MessagesList(){
     const messageQuery = useQuery({
@@ -42,6 +42,6 @@ export default function MessagesList(){
             </>
             : messageQuery.isLoading
                 ? <StyledLoading />
-                : <h1>Error</h1>
+                : <StyledError />
     )
 }

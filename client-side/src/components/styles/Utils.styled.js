@@ -47,7 +47,7 @@ export const StyledError = styled.div`
     background-repeat: no-repeat;
     background-size:100%;
 
-    animation: error 1.5s linear forwards;
+    animation: ${({ infinity }) => (!infinity) ? "error-infinity" : "error"} 1.5s linear forwards;
 
     @keyframes error {
         0%{
@@ -62,6 +62,15 @@ export const StyledError = styled.div`
         100%{
             display: none;
             opacity: 0;
+        }
+    }
+
+    @keyframes error-infinity {
+        from{
+            opacity: 0;
+        }
+        to{
+            opacity: 1;
         }
     }
 `
