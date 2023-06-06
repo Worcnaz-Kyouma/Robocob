@@ -14,7 +14,7 @@ export default function Login(){
         queryKey: ['session', 'start'],
         queryFn: () => {
             setCooldown(setTimeout(()=>{
-                sessionStartQuery.refetch()
+                sessionStartQuery.refetch();
             }, 20000))
             return fetch('http://localhost:21465/api/robocob/start-session', {
                 method: "POST",
