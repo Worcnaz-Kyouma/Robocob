@@ -19,11 +19,14 @@ export default function Header(props){
             <HeaderButtonsWrapper>
                 {props.children}
             </HeaderButtonsWrapper>
+            {!props?.login &&
             <div>
-                <StyledButton onClick={logoutMutation.mutate} barColor={'#9C0707'}>
-                    Sair
-                </StyledButton>
+            <StyledButton onClick={logoutMutation.mutate} barColor={'#9C0707'}>
+                Sair
+            </StyledButton>
             </div>
+            }
+            
         </HeaderStyled>
         
     )
