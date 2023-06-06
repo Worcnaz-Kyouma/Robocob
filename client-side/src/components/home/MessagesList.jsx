@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { TableWrapper, StyledTable } from "../styles/Table.styled"
+import { TableWrapper, StyledTable } from "../styles/MessagesList.styled"
 import { StyledError, StyledLoading } from "../styles/Utils.styled"
 import { useState } from "react"
 
