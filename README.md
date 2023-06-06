@@ -46,7 +46,7 @@ Execute estes passos para as 3 partes da aplicação:
   - Dentro da pasta client-side, instalar dependencias node presentes no arquivo "package.json"
   - Executar em seu diretorio o comando: "npm run dev"
 - Back-end:
-  - PHP (instalando o servidor apache todos os requisitos ja estaram cumpridos)
+  - PHP (instalando o servidor apache todos os requisitos do Laravel ja estarão cumpridos)
   - MySQL Database
   - Composer
   - Dentro da pasta server-side, instalar dependencias laravel utilizando o comando "composer install"
