@@ -30,19 +30,11 @@ export default function Root(){
         refetchInterval: 1000,
         onSuccess: (data) =>{
             if(data.status!="CONNECTED"){
-                navigate('/login', {
-                    state: {
-                        token: tokenQuery.data.token
-                    }
-                })
+                navigate('/login')
             }
             else{
                 (!location.pathname.includes('/home')) &&
-                navigate('/home', {
-                    state: {
-                        token: tokenQuery.data.token
-                    }
-                })
+                navigate('/home')
             } 
         }
     })
@@ -61,7 +53,7 @@ export default function Root(){
         <>
         <ThemeProvider theme={theme}>
             <GlobalStyles />
-            <Outlet />
+            {tokenQuery.isSuccess && <Outlet context={[tokenQuery.data.token]}/>}
         </ThemeProvider>
         </>
     )

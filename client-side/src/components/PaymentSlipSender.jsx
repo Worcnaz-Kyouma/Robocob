@@ -4,7 +4,7 @@ import Header from "./Header"
 import Footer from "./home/Footer";
 import moment from 'moment';
 import { StyledButton } from "./styles/Button.styled";
-import { Flex, StyledForm, StyledInputSpan, StyledInputFileSpan } from "./styles/PaymentSlipSender.styled";
+import { Flex, StyledForm, StyledInputSpan, StyledInputFileSpan, StyledSucess } from "./styles/PaymentSlipSender.styled";
 import { useRef } from "react";
 
 export default function PaymentSlipSender(props){
@@ -22,6 +22,9 @@ export default function PaymentSlipSender(props){
                     'Authorization': 'Bearer ' + location.state.token
                 }
             }).then(res => res.json())
+        },
+        onSuccess: () => {
+            setTimeout(()=>navigate(0), 2000)
         }
     })
 
@@ -110,6 +113,7 @@ export default function PaymentSlipSender(props){
 
     return (
         <>
+        {(sendFileMutation.isSuccess) && <StyledSucess />}
         <Header>
             <StyledButton onClick={() => navigate(-1)}>Voltar</StyledButton>
         </Header>
@@ -117,7 +121,7 @@ export default function PaymentSlipSender(props){
             <StyledForm onSubmit={handleSubmit}>
                 <StyledInputSpan>
                     <label htmlFor="numero_destino">Numero</label>
-                    <input type="text" name="numero_destino" id="numero_destino"/>
+                    <input type="tel" name="numero_destino" id="numero_destino" pattern="[0-9]{2}[0-9]{2}[0-9]{4}[0-9]{4}"/>
                 </StyledInputSpan>
                 <StyledInputSpan>
                     <label htmlFor="mensagem_adicional">Mensagem</label>

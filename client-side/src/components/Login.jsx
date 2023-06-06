@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom"
+import { useOutletContext } from "react-router-dom"
 import { useQueryClient, useQuery } from "@tanstack/react-query"
 import { QRcodeWrapper } from "./styles/Login.styled"
 import Header from "./Header"
@@ -7,21 +7,18 @@ import { useEffect, useState } from "react"
 
 export default function Login(){
     const queryClient = useQueryClient()
-    const location = useLocation()
+    const [ token ] = useOutletContext()
     const [ reloadCooldown, setCooldown ] = useState(null)
-
-    useEffect(() => {
-        setCooldown(setTimeout(()=>sessionStartQuery.refetch(), 20000))
-    }, [])
 
     const sessionStartQuery = useQuery({
         queryKey: ['session', 'start'],
         queryFn: () => {
+            setCooldown(setTimeout(()=>sessionStartQuery.refetch(), 20000))
             return fetch('http://localhost:21465/api/robocob/start-session', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + location.state?.token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify({
                     webhook: null,
@@ -42,7 +39,7 @@ export default function Login(){
         queryFn: () => {
             return fetch('http://localhost:21465/api/robocob/qrcode-session', {
                 headers: {
-                    'Authorization': 'Bearer ' + location.state?.token
+                    'Authorization': 'Bearer ' + token
                 }
             }).then(res => res.blob())
         },
@@ -53,7 +50,7 @@ export default function Login(){
 
     return (
         <>
-        <Header login={true} token={location.state?.token} />
+        <Header login={true} token={token} />
         <QRcodeWrapper>
             {sessionQRCodeQuery.isSuccess
                 ? <img src={URL.createObjectURL(sessionQRCodeQuery.data)} alt="" />

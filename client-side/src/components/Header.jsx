@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import { HeaderStyled, HeaderButtonsWrapper } from "./styles/Header.styled"
+import { HeaderStyled, HeaderButtonsWrapper, LogoWrapper } from "./styles/Header.styled"
 import { StyledButton } from "./styles/Button.styled"
 import { useQueryClient } from "@tanstack/react-query"
 
@@ -25,6 +25,9 @@ export default function Header(props){
             <HeaderButtonsWrapper>
                 {props.children}
             </HeaderButtonsWrapper>
+
+            <LogoWrapper />
+
             {!props?.login &&
             <div>
             <StyledButton onClick={logoutMutation.mutate} barColor={'#9C0707'}>

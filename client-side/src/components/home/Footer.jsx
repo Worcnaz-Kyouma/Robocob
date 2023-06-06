@@ -12,7 +12,7 @@ export default function Footer(props){
             }).then(res => res.json())
         },
         onSuccess: (data) => {
-            if(!data.response.pushname)
+            if(!data.response?.pushname)
                 hostDeviceQuery.refetch()
         }
     }) 

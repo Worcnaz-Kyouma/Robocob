@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { TableWrapper, StyledTable } from "../styles/Table.styled"
+import { StyledLoading } from "../styles/Loading.styled"
 
 export default function MessagesList(){
     const messageQuery = useQuery({
@@ -9,11 +10,10 @@ export default function MessagesList(){
         }
     })
 
-    if (messageQuery.isLoading) return <h1>Loading!</h1>
-    if (messageQuery.isError) return <h1>Error :c</h1>
-
     return (
-        <TableWrapper>
+        messageQuery.isSuccess 
+            ? <>
+            <TableWrapper>
             <StyledTable>
                 <thead>
                     <tr>
@@ -25,19 +25,23 @@ export default function MessagesList(){
                     </tr>
                 </thead>
                 <tbody>
-                    {messageQuery.data.map(message => {
-                        return (
-                            <tr key={message.id}>
-                                <td>{message.id}</td>
-                                <td>{message.mensagem_adicional}</td>
-                                <td>{message.numero_destino}</td>
-                                <td>{new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', year: 'numeric'} ).format(new Date(message.data_envio))}</td>
-                                <td>{message.nome_arquivo}</td>
-                            </tr>
-                        )
-                    })}
+                        {messageQuery.data.map(message => {
+                            return (
+                                <tr key={message.id}>
+                                    <td>{message.id}</td>
+                                    <td>{message.mensagem_adicional}</td>
+                                    <td>{message.numero_destino}</td>
+                                    <td>{new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', year: 'numeric'} ).format(new Date(message.data_envio))}</td>
+                                    <td>{message.nome_arquivo}</td>
+                                </tr>
+                            )
+                        })}
                 </tbody>
             </StyledTable>
-        </TableWrapper>
+            </TableWrapper>
+            </>
+            : messageQuery.isLoading
+                ? <StyledLoading />
+                : <h1>Error</h1>
     )
 }

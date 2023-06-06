@@ -92,3 +92,30 @@ export const StyledInputFileSpan = styled.span`
         font-size: 22px;
     }
 `
+
+export const StyledSucess = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 150px;
+    height: 150px;
+
+    background-image: url("../okay.png");
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+
+    z-index: 99;
+    
+    animation: sucess 0.4s forwards;
+
+    @keyframes sucess {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+`
