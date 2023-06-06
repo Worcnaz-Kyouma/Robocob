@@ -1,12 +1,20 @@
 import { useQuery } from "@tanstack/react-query"
 import { TableWrapper, StyledTable } from "../styles/Table.styled"
 import { StyledError, StyledLoading } from "../styles/Utils.styled"
+import { useState } from "react"
 
 export default function MessagesList(){
+    const [ messagesPerPage, setMessagesPerPage ] = useState(15)
+    const [ page, setPage ] = useState(0)
+    const [ maxPage, setMaxPage] = useState(null)
+
     const messageQuery = useQuery({
         queryKey: ["message"],
         queryFn: () => {
             return fetch("http://localhost:8000/api/boleto").then(res => res.json())
+        },
+        onSuccess: (data) => {
+            setMaxPage(Math.floor(data.length/messagesPerPage))
         }
     })
 
@@ -25,7 +33,7 @@ export default function MessagesList(){
                     </tr>
                 </thead>
                 <tbody>
-                        {messageQuery.data.map(message => {
+                        {messageQuery.data.slice(page*messagesPerPage, page*messagesPerPage+messagesPerPage).map(message => {
                             return (
                                 <tr key={message.id}>
                                     <td>{message.id}</td>
@@ -38,6 +46,11 @@ export default function MessagesList(){
                         })}
                 </tbody>
             </StyledTable>
+            <div>
+                <button onClick={() => setPage((prev)=>--prev)} disabled={page==0}>&larr;</button>
+                <span>{page} / {maxPage}</span>
+                <button onClick={() => setPage((prev)=>++prev)} disabled={page==maxPage}>&rarr;</button>
+            </div>
             </TableWrapper>
             </>
             : messageQuery.isLoading
