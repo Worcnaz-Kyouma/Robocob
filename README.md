@@ -43,15 +43,15 @@ Execute estes passos para as 3 partes da aplicação:
 
 - Front-end: 
   - Node.js
-  - Instalar depencencias node presentes no arquivo "package.json"
+  - Dentro da pasta client-side, instalar depencencias node presentes no arquivo "package.json"
   - Executar em seu diretorio o comando: "npm run dev"
 - Back-end:
   - PHP (instalando o servidor apache todos os requisitos ja estaram cumpridos)
   - MySQL Database
-  - Executar em seu diretorio o comando: "php artisan serve"
+  - Dentro da pasta server-side, executar o comando: "php artisan serve"
 - WWPConnect-server:
   - Node.js
-  - Instalar depencencias node presentes no arquivo "package.json"
+  - Dentro da pasta wppconnect-server, instalar depencencias node presentes no arquivo "package.json"
   - Executar em seu diretorio o comando: "npm run dev"
 
 ## Em caso de erros/Telas de carregamente prolongadas:
