@@ -50,7 +50,7 @@ Execute estes passos para as 3 partes da aplicação:
   - MySQL Database
   - Composer
   - Dentro da pasta server-side, instalar dependencias laravel utilizando o comando "composer install"
-  - Caso o arquivo ".env" não existe mas o ".env.example" existe, execute o comando "copy .env.example .env"
+  - Caso o arquivo ".env" não exista mas o ".env.example" exista, execute o comando "copy .env.example .env"
   - Dentro do arquivo ".env" atribuir os seguintes valores:
     - DB_DATABASE = aquicob
     - DB_USERNAME = [seu usuario do banco]
@@ -65,4 +65,4 @@ Execute estes passos para as 3 partes da aplicação:
 
 A aplicação pode conter alguns erros, estas ações podem (provavelmente) resolve-los:
 - Recarregar a pagina
-- Re iniciar todos as partes da aplicação, principalmente a "WWPConnect-server", seguindo os passos orietados no segmento "Como rodar"
+- Reiniciar todas as partes da aplicação, principalmente a "WWPConnect-server", seguindo os passos orietados no segmento "Como rodar"
