@@ -48,7 +48,7 @@ export default function MessagesList(){
             </StyledTable>
             <div>
                 <button onClick={() => setPage((prev)=>--prev)} disabled={page==0}>&larr;</button>
-                <span>{page} / {maxPage}</span>
+                <span>{page+1} / {maxPage+1}</span>
                 <button onClick={() => setPage((prev)=>++prev)} disabled={page==maxPage}>&rarr;</button>
             </div>
             </TableWrapper>
