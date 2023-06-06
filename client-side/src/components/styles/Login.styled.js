@@ -2,6 +2,8 @@ import styled from "styled-components"
 
 export const QRcodeWrapper = styled.div`
     position: absolute;
+    width: 278px;
+    height: 278px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -10,6 +12,10 @@ export const QRcodeWrapper = styled.div`
     border-right: 8px solid black;
     border-bottom: 8px solid ${({theme}) => theme.colors.primary};
     border-left: 8px solid ${({theme}) => theme.colors.primary};
+
+    img{
+        width: 100%;
+    }
 
     &::before, &::after{
         content: '';

@@ -1,10 +1,21 @@
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useQueryClient, useQuery } from "@tanstack/react-query"
-import { QRcodeWrapper } from "./styles/QRcode.styled"
+import { QRcodeWrapper } from "./styles/Login.styled"
 import Header from "./Header"
+import {LoadingMessage,  StyledLoading } from "./styles/Loading.styled"
+import { useEffect, useRef, useState } from "react"
 
 export default function Login(){
+    const navigate = useNavigate()
     const location = useLocation()
+    const loadingTimeout = useRef(null);
+    const [ loadingMessage, setLoadingMessage ] = useState(null)
+    
+    useEffect(() => {
+        loadingTimeout.current = setTimeout(() => {
+            setLoadingMessage(<LoadingMessage>Esta demorando muito? Por favor, recarregue a pagina</LoadingMessage>)
+        }, 30000)
+    }, []);
 
     const sessionStartQuery = useQuery({
         queryKey: ['session', 'start'],
@@ -21,7 +32,11 @@ export default function Login(){
                 })
             }).then(res => res.json())
         },
-        refetchInterval: 1000 * 40
+        refetchInterval: 1000 * 45,
+        staleTime: Infinity,
+        onSuccess: () => {
+            clearTimeout(loadingTimeout.current)
+        }
     })
 
     const sessionQRCodeQuery = useQuery({
@@ -34,17 +49,21 @@ export default function Login(){
             }).then(res => res.blob())
         },
         enabled: sessionStartQuery.isSuccess,
-        refetchInterval: 1000 * 1
+        staleTime: Infinity,
+        refetchInterval: 1000 * 5
     })
 
-    if(sessionQRCodeQuery.isLoading) return <h1>Loading</h1>
-    if(sessionQRCodeQuery.isError) return <h1>Error</h1>
     return (
         <>
         <Header login={true} token={location.state.token} />
         <QRcodeWrapper>
-            <img src={URL.createObjectURL(sessionQRCodeQuery.data)} alt="QRCode" />
+            {(sessionQRCodeQuery.isSuccess)
+                ? <img src={URL.createObjectURL(sessionQRCodeQuery.data)} onError={() => navigate(0)} />
+
+                : <StyledLoading />
+            }
         </QRcodeWrapper>
+        {loadingMessage}
         </>
     )
 
