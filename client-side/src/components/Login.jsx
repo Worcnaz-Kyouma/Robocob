@@ -2,20 +2,17 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useQueryClient, useQuery } from "@tanstack/react-query"
 import { QRcodeWrapper } from "./styles/Login.styled"
 import Header from "./Header"
-import {LoadingMessage,  StyledLoading } from "./styles/Loading.styled"
-import { useEffect, useRef, useState } from "react"
+import { StyledLoading } from "./styles/Loading.styled"
+import { useEffect, useState } from "react"
 
 export default function Login(){
-    const navigate = useNavigate()
+    const queryClient = useQueryClient()
     const location = useLocation()
-    const loadingTimeout = useRef(null);
-    const [ loadingMessage, setLoadingMessage ] = useState(null)
-    
+    const [ reloadCooldown, setCooldown ] = useState(null)
+
     useEffect(() => {
-        loadingTimeout.current = setTimeout(() => {
-            setLoadingMessage(<LoadingMessage>Esta demorando muito? Por favor, recarregue a pagina</LoadingMessage>)
-        }, 30000)
-    }, []);
+        setCooldown(setTimeout(()=>sessionStartQuery.refetch(), 20000))
+    }, [])
 
     const sessionStartQuery = useQuery({
         queryKey: ['session', 'start'],
@@ -24,7 +21,7 @@ export default function Login(){
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + location.state.token
+                    'Authorization': 'Bearer ' + location.state?.token
                 },
                 body: JSON.stringify({
                     webhook: null,
@@ -32,10 +29,11 @@ export default function Login(){
                 })
             }).then(res => res.json())
         },
-        refetchInterval: 1000 * 45,
-        staleTime: Infinity,
+        enabled: queryClient.getQueryData(['token'])!=null,
+        refetchInterval: 1000 * 40,
+        cacheTime: Infinity,
         onSuccess: () => {
-            clearTimeout(loadingTimeout.current)
+            clearTimeout(reloadCooldown)
         }
     })
 
@@ -44,26 +42,28 @@ export default function Login(){
         queryFn: () => {
             return fetch('http://localhost:21465/api/robocob/qrcode-session', {
                 headers: {
-                    'Authorization': 'Bearer ' + location.state.token
+                    'Authorization': 'Bearer ' + location.state?.token
                 }
             }).then(res => res.blob())
         },
-        enabled: sessionStartQuery.isSuccess,
-        staleTime: Infinity,
-        refetchInterval: 1000 * 5
+        enabled: sessionStartQuery.isSuccess && !sessionStartQuery.isFetching,
+        refetchInterval: 1000 * 1,
+        cacheTime: Infinity
     })
 
     return (
         <>
-        <Header login={true} token={location.state.token} />
+        <Header login={true} token={location.state?.token} />
         <QRcodeWrapper>
-            {(sessionQRCodeQuery.isSuccess)
-                ? <img src={URL.createObjectURL(sessionQRCodeQuery.data)} onError={() => navigate(0)} />
+            {sessionQRCodeQuery.isSuccess
+                ? <img src={URL.createObjectURL(sessionQRCodeQuery.data)} alt="" />
 
-                : <StyledLoading />
+                : sessionQRCodeQuery.isLoading
+                    ? <StyledLoading />
+                    : <h1>Error</h1>
+
             }
         </QRcodeWrapper>
-        {loadingMessage}
         </>
     )
 
