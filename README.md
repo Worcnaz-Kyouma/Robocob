@@ -50,7 +50,8 @@ Execute estes passos para as 3 partes da aplicação:
   - MySQL Database
   - Composer
   - Dentro da pasta server-side, instalar dependencias laravel utilizando o comando "composer install"
-  - Dentro do arquivo ".env.example" atribuir os seguintes valores:
+  - Caso o arquivo ".env" não existe mas o ".env.example" existe, execute o comando "copy .env.example .env"
+  - Dentro do arquivo ".env" atribuir os seguintes valores:
     - DB_DATABASE = aquicob
     - DB_USERNAME = [seu usuario do banco]
     - DB_PASSWORD = [senha deste usuario]
