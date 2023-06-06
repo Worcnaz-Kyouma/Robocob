@@ -4,20 +4,20 @@
 
 Problema:  Uma empresa precisa de uma ferramenta para o envio de boletos via WhatsApp, com isso foi idealizado um protótipo de 3 telas, sendo elas: 
  
-- Conectar WhatsApp utilizando QRCode (WhatsAppWeb API).
-  - Atualizar status ao conectar;
-  - Atualizar status ao desconectar (opcional);
-  - Informações sobre o número conectado (opcional);
-- Preencher e anexar as seguintes informações necessárias para o envio:
-  - Número a ser enviado o boleto;
-  - Mensagem que acompanhará o boleto;
-  - Campo para upload do arquivo (.pdf);
-- Relatório de envio, onde deve conter as seguintes colunas:
-  - ID do envio;
-  - Mensagem enviada;
-  - Número destino;
-  - Data/Hora envio;
-  - Nome do arquivo enviado;
+- Conectar WhatsApp utilizando QRCode (WhatsAppWeb API)
+  - Atualizar status ao conectar
+  - Atualizar status ao desconectar (opcional)
+  - Informações sobre o número conectado (opcional)
+- Preencher e anexar as seguintes informações necessárias para o envio
+  - Número a ser enviado o boleto
+  - Mensagem que acompanhará o boleto
+  - Campo para upload do arquivo (.pdf)
+- Relatório de envio, onde deve conter as seguintes colunas
+  - ID do envio
+  - Mensagem enviada
+  - Número destino
+  - Data/Hora envio
+  - Nome do arquivo enviado
 
 ## Sobre a implementação
 
@@ -31,7 +31,7 @@ O sistema consiste em 3 partes:
 - Back-end
   - REST-Api
   - PHP
-  - MYSql
+  - MySQL Database
   - Framework Laravel
 - WWPConnect-server
   - REST-Api desenvolvido pela WPPConnect Team utilizado neste projeto para comunicação com o whatsapp
@@ -47,8 +47,15 @@ Execute estes passos para as 3 partes da aplicação:
   - Executar em seu diretorio o comando: "npm run dev"
 - Back-end:
   - PHP (instalando o servidor apache todos os requisitos ja estaram cumpridos)
+  - MySQL Database
   - Executar em seu diretorio o comando: "php artisan serve"
 - WWPConnect-server:
   - Node.js
   - Instalar depencencias node presentes no arquivo "package.json"
   - Executar em seu diretorio o comando: "npm run dev"
+
+## Em caso de erros/Telas de carregamente prolongadas:
+
+A aplicação pode conter alguns erros, estas ações podem (provavelmente) resolve-los:
+- Recarregar a pagina
+- Re iniciar todos as partes da aplicação, principalmente a "WWPConnect-server", seguindo os passos orietados no segmento "Como rodar"
