@@ -1,10 +1,8 @@
 import { useMutation } from "@tanstack/react-query"
 import { HeaderStyled, HeaderButtonsWrapper, LogoWrapper } from "./styles/Header.styled"
 import { StyledButton } from "./styles/Button.styled"
-import { useQueryClient } from "@tanstack/react-query"
 
 export default function Header(props){
-    const queryClient = useQueryClient();
 
     const logoutMutation = useMutation({
         mutationFn: () => {
@@ -14,9 +12,6 @@ export default function Header(props){
                     'Authorization': 'Bearer ' + props.token
                 }
             }).then(res => res.json())
-        },
-        onSuccess: () => {
-            queryClient.resetQueries(['session', 'qrcode'])
         }
     })
 
