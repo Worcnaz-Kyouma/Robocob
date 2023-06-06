@@ -29,7 +29,7 @@ O sistema consiste em 3 partes:
   - React Router
   - Styled Components
 - Back-end
-  - REST Api
+  - REST-Api
   - PHP
   - MYSql
   - Framework Laravel
