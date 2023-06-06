@@ -128,7 +128,7 @@ export default function PaymentSlipSender(props){
             <StyledForm onSubmit={handleSubmit}>
                 <StyledInputSpan>
                     <label htmlFor="numero_destino">Numero</label>
-                    <input type="tel" name="numero_destino" id="numero_destino" onChange={(event) => {
+                    <input type="tel" name="numero_destino" id="numero_destino" required onChange={(event) => {
                         const inputElement = event.target
                         let alphabeticRegExp = /[a-zA-Z]/g
                         if(alphabeticRegExp.test(inputElement.value))
@@ -151,6 +151,7 @@ export default function PaymentSlipSender(props){
                     <input type="file" name="boleto"
                     id="boleto"
                     accept="application/pdf"
+                    required
                     onChange={(event) => {
                         embedRef.current.src = URL.createObjectURL(event.target.files[0])
                     }}/>
