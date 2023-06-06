@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { TableWrapper, StyledTable } from "../styles/Table.styled"
-import { StyledLoading } from "../styles/Loading.styled"
+import { StyledLoading } from "../styles/Utils.styled"
 
 export default function MessagesList(){
     const messageQuery = useQuery({

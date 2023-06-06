@@ -52,7 +52,7 @@ export const LogoWrapper = styled.div`
 
     background-image: url("../RobocobLogo.png");
     background-repeat: no-repeat;
-    background-size:70% 70%;
+    background-size:70% 62%;
     background-position: 50%;
 
     background-color: #ffffff;

@@ -6,13 +6,14 @@ import moment from 'moment';
 import { StyledButton } from "./styles/Button.styled";
 import { Flex, StyledForm, StyledInputSpan, StyledInputFileSpan, StyledSucess } from "./styles/PaymentSlipSender.styled";
 import { useRef } from "react";
+import { StyledError } from "./styles/Utils.styled";
 
 export default function PaymentSlipSender(props){
     const navigate = useNavigate()
     const location = useLocation()
     const embedRef = useRef(null)
 
-    const sendFileMutation = useMutation({
+    const fileMutation = useMutation({
         mutationFn: (newFile) => {
             return fetch("http://localhost:21465/api/robocob/send-file-base64", {
                 method: "POST",
@@ -22,13 +23,10 @@ export default function PaymentSlipSender(props){
                     'Authorization': 'Bearer ' + location.state.token
                 }
             }).then(res => res.json())
-        },
-        onSuccess: () => {
-            setTimeout(()=>navigate(0), 2000)
         }
     })
 
-    const sendMessageMutation = useMutation({
+    const additionalMessageMutation = useMutation({
         mutationFn: (newAdditionalMessage) => {
             return fetch("http://localhost:21465/api/robocob/send-message", {
                 method: "POST",
@@ -50,6 +48,9 @@ export default function PaymentSlipSender(props){
                     'Content-Type': 'application/json'
                 }
             }).then(res => res.json())
+        },
+        onSuccess: () => {
+            setTimeout(()=>navigate(0), 2000)
         }
     })
 
@@ -75,7 +76,7 @@ export default function PaymentSlipSender(props){
             isGroup: false
         }
 
-        sendFileMutation.mutate(formJson)
+         return fileMutation.mutateAsync(formJson)
     }
 
     function sendAdditionalMessage(form){
@@ -85,7 +86,7 @@ export default function PaymentSlipSender(props){
             isGroup: false
         }
 
-        sendMessageMutation.mutate(formJson)
+        return additionalMessageMutation.mutateAsync(formJson)
     }
 
     function persistMessage(form){
@@ -96,7 +97,8 @@ export default function PaymentSlipSender(props){
         formData.append("data_envio", moment().format())
 
         const formJson = Object.fromEntries(formData.entries())
-        messageMutation.mutate(formJson)
+
+        return messageMutation.mutateAsync(formJson)
     }
     
     function handleSubmit(event){
@@ -104,16 +106,21 @@ export default function PaymentSlipSender(props){
 
         const form = event.target
 
-        sendPaymentSlip(form)
+        sendAdditionalMessage(form).then(()=>{
+            sendPaymentSlip(form).then(() => {
+                persistMessage(form)
+            })
+        })
 
-        sendAdditionalMessage(form)
+        
 
-        persistMessage(form)
+       
     }
 
     return (
         <>
-        {(sendFileMutation.isSuccess) && <StyledSucess />}
+        {(messageMutation.isSuccess) && <StyledSucess />}
+        {(fileMutation.isError || additionalMessageMutation.isError || messageMutation.isError) && <StyledError />}
         <Header>
             <StyledButton onClick={() => navigate(-1)}>Voltar</StyledButton>
         </Header>
@@ -121,7 +128,14 @@ export default function PaymentSlipSender(props){
             <StyledForm onSubmit={handleSubmit}>
                 <StyledInputSpan>
                     <label htmlFor="numero_destino">Numero</label>
-                    <input type="tel" name="numero_destino" id="numero_destino" pattern="[0-9]{2}[0-9]{2}[0-9]{4}[0-9]{4}"/>
+                    <input type="tel" name="numero_destino" id="numero_destino" onChange={(event) => {
+                        const inputElement = event.target
+                        let alphabeticRegExp = /[a-zA-Z]/g
+                        if(alphabeticRegExp.test(inputElement.value))
+                            inputElement.setCustomValidity('Um numero de telefone não pode conter letras')
+                        else
+                            inputElement.setCustomValidity('')
+                    }}/>
                 </StyledInputSpan>
                 <StyledInputSpan>
                     <label htmlFor="mensagem_adicional">Mensagem</label>
@@ -141,7 +155,7 @@ export default function PaymentSlipSender(props){
                         embedRef.current.src = URL.createObjectURL(event.target.files[0])
                     }}/>
                 </StyledInputFileSpan>
-                <StyledButton barColor="#5FAB5F" type="submit">Submit</StyledButton>
+                <StyledButton barColor="#5FAB5F" type="submit">Enviar</StyledButton>
             </StyledForm>
 
             <div>

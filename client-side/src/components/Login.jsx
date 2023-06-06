@@ -2,8 +2,8 @@ import { useOutletContext } from "react-router-dom"
 import { useQueryClient, useQuery } from "@tanstack/react-query"
 import { QRcodeWrapper } from "./styles/Login.styled"
 import Header from "./Header"
-import { StyledLoading } from "./styles/Loading.styled"
-import { useEffect, useState } from "react"
+import { StyledError, StyledLoading } from "./styles/Utils.styled"
+import { useState } from "react"
 
 export default function Login(){
     const queryClient = useQueryClient()
@@ -13,7 +13,9 @@ export default function Login(){
     const sessionStartQuery = useQuery({
         queryKey: ['session', 'start'],
         queryFn: () => {
-            setCooldown(setTimeout(()=>sessionStartQuery.refetch(), 20000))
+            setCooldown(setTimeout(()=>{
+                sessionStartQuery.refetch()
+            }, 20000))
             return fetch('http://localhost:21465/api/robocob/start-session', {
                 method: "POST",
                 headers: {
@@ -28,7 +30,7 @@ export default function Login(){
         },
         enabled: queryClient.getQueryData(['token'])!=null,
         refetchInterval: 1000 * 40,
-        cacheTime: Infinity,
+        refetchOnWindowFocus: false,
         onSuccess: () => {
             clearTimeout(reloadCooldown)
         }
@@ -41,23 +43,27 @@ export default function Login(){
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
-            }).then(res => res.blob())
+            }).then(res => {
+                if(res.headers.get('Content-Type') == 'application/json; charset=utf-8'){
+                    return res.json()
+                }
+                return res.blob()
+            })
         },
-        enabled: sessionStartQuery.isSuccess && !sessionStartQuery.isFetching,
-        refetchInterval: 1000 * 1,
-        cacheTime: Infinity
+        enabled: sessionStartQuery.isSuccess,
+        refetchInterval: 1000 * 1
     })
 
     return (
         <>
         <Header login={true} token={token} />
         <QRcodeWrapper>
-            {sessionQRCodeQuery.isSuccess
+            {sessionQRCodeQuery.isSuccess && !sessionQRCodeQuery.data?.message
                 ? <img src={URL.createObjectURL(sessionQRCodeQuery.data)} alt="" />
 
-                : sessionQRCodeQuery.isLoading
+                : sessionQRCodeQuery.isLoading || sessionQRCodeQuery.data?.message
                     ? <StyledLoading />
-                    : <h1>Error</h1>
+                    : <StyledError />
 
             }
         </QRcodeWrapper>
