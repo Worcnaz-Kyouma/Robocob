@@ -55,6 +55,7 @@ Execute estes passos para as 3 partes da aplicação:
     - DB_DATABASE = aquicob
     - DB_USERNAME = [seu usuario do banco]
     - DB_PASSWORD = [senha deste usuario]
+  - Executar em seu diretorio o comando: "php artisan migrate" criando o squema necessario do banco de dados
   - Executar em seu diretorio o comando: "php artisan serve"
 - WWPConnect-server:
   - Node.js
